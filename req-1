@@ -1,0 +1,39 @@
+using System;
+using System.Linq;
+
+namespace Coding_Challenge_Calculator
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string val;
+            Console.Write("Enter 2 values to be summed, seperated by a comma(ex '5,23'): ");
+            val = Console.ReadLine();
+            int count = val.Split(',').Length - 1;
+
+            if (count < 2)
+            {
+                if (val.Contains(",") == true)
+                {
+                    string[] values = val.Split(',').Select(sValue => sValue.Trim()).ToArray();
+                    int val1 = Int32.Parse(values[0]);
+                    int val2 = Int32.Parse(values[1]);
+
+                    int total = val1 + val2;
+
+                    Console.WriteLine(total);
+                }
+
+                else
+                {
+                    Console.WriteLine(val);
+                }
+            }
+            else
+            {
+                Console.WriteLine("Please enter only 2 numbers");
+            }
+        }
+    }
+}
