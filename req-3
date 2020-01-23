@@ -12,7 +12,7 @@ namespace Coding_Challenge_Calculator
             val = Console.ReadLine();
 
             //check to see if string has comma
-            if (val.Contains(",") == true)
+            if (val.Contains(",") == true || val.Contains("\\n") == true)
             {
 
                 //loop to seperate values on comma and new line character
