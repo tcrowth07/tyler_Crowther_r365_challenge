@@ -1,0 +1,70 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Coding_Challenge_Calculator
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string val;
+            Console.Write("Enter 2 values to be summed, seperated by a comma(ex '5,23'): ");
+            val = Console.ReadLine();
+
+            //check to see if string has comma or new line character
+            if (val.Contains(",") == true || val.Contains("\\n") == true)
+            {
+
+                //loop to seperate values on comma and new line character
+                string[] values = val.Split(new string[] { ",", "\\n" }, StringSplitOptions.None);
+
+                for (int iCount = 0; iCount < values.Length; iCount++)
+                {
+                    values[iCount] = values[iCount].Trim();
+                }
+
+                //convert string array to int array
+                int[] ints = Array.ConvertAll(values, int.Parse);
+
+                //list to store negative numbers
+                List<int> negList = new List<int>();
+                for (int iCount = 0; iCount < ints.Length; iCount++)
+                {
+                    if (ints[iCount] < 0)
+                    {
+                        negList.Add(ints[iCount]);
+                    }
+                }
+
+                //if no negatives, add numbers and print
+                if (negList.Count == 0)
+                {
+                    //sum total and print
+                    int sum = ints.Sum();
+                    Console.WriteLine(sum);
+                }
+
+                //print negative numbers as errors
+                else
+                {
+                    Console.WriteLine("The number(s): ");
+
+                    for(int i = 0; i < negList.Count; i++)
+                    {
+                        Console.WriteLine(negList[i]);
+                    }
+
+                    Console.WriteLine(" are invalid");
+                }
+            }
+
+            //print if j
+            else
+            {
+                Console.WriteLine(val);
+            }
+            
+        }
+    }
+}
