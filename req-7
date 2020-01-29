@@ -1,0 +1,110 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+
+namespace Coding_Challenge_Calculator
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string val;
+            Console.Write("Enter values to be summed, seperated by a comma(ex '5,23'): ");
+            val = Console.ReadLine();
+
+            //custom deliminator
+            int end = val.IndexOf(']')-3;
+            string deliminator = val.Substring(3, end);
+
+            //check if string has either comma or new line character
+            if (val.Contains(",") == true || val.Contains("\\n") == true)
+            {
+                //loop to split string on comma and new line character
+                string[] values = val.Split(new string[] { ",", "\\n", deliminator }, StringSplitOptions.None);
+                for (int i = 0; i < values.Length; i++)
+                {
+                    values[i] = values[i].Trim();
+                }
+
+
+                //loop to create int array and convert valid numbers + change invalid to 0
+                int[] ints = new int[values.Length];
+                for (int i = 0; i < values.Length; i++)
+                {
+                    bool success = Int32.TryParse(values[i], out _);
+
+                    if (success)
+                    {
+                        ints[i] = int.Parse(values[i]);
+                    }
+                    else
+                    {
+                        ints[i] = 0;
+                    }
+                }
+
+                //list to store negative numbers
+                List<int> negList = new List<int>();
+                for (int iCount = 0; iCount < ints.Length; iCount++)
+                {
+                    if (ints[iCount] < 0)
+                    {
+                        negList.Add(ints[iCount]);
+                    }
+                }
+
+                //if no negatives, add numbers and print
+                if (negList.Count == 0)
+                {
+                    //convert numbers greater than 1000 to 0
+                    for (int iCount = 0; iCount < ints.Length; iCount++)
+                    {
+                        if (ints[iCount] > 1000)
+                        {
+                            ints[iCount] = 0;
+                        }
+                    }
+
+                    //sum total and print
+                    int sum = ints.Sum();
+                    Console.WriteLine(sum);
+                }
+
+                //print negative numbers as errors
+                else
+                {
+                    Console.WriteLine("The number(s): ");
+
+                    for (int i = 0; i < negList.Count; i++)
+                    {
+                        Console.WriteLine(negList[i]);
+                    }
+
+                    Console.WriteLine("are invalid");
+                }
+            }
+
+            //if single value
+            else
+            {
+                bool success = Int32.TryParse(val, out _);
+
+                if (success == false)
+                {
+                    val = "0";
+                    Console.WriteLine(val);
+                }
+
+                else
+                {
+                    int iVal = int.Parse(val);
+                    if (iVal > 1000)
+                    {
+                        iVal = 0;
+                    }
+                    Console.WriteLine(iVal);
+                }
+            }
+        }
+    }
+}
